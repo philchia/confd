@@ -46,12 +46,11 @@ func IntervalProcessor(config Config, stopChan, doneChan chan bool, errChan chan
 func (p *intervalProcessor) Process() {
 	defer close(p.doneChan)
 	for {
-		ts, err := getTemplateResources(p.config)
+		err := Process(p.config)
 		if err != nil {
 			log.Fatal(err.Error())
 			break
 		}
-		process(ts)
 		select {
 		case <-p.stopChan:
 			break
